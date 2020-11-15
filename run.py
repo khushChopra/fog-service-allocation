@@ -10,15 +10,19 @@ pprint(my_cluster_head.describe())
 print()
 
 k = input()
-no_of_service = int(k)
-services = [ i for i in range(no_of_service) ]
-setup_payloads = [ [1,1,0,3] for i in range(no_of_service) ]
-payloads = [ [1+random(), 0.5+random(), randint(0,5)] for i in range(no_of_service) ]
 
-my_cluster_head.setup_service(services, setup_payloads, policy="random")
-random_result = my_cluster_head.execute(services, payloads)
-print(random_result)
-my_cluster_head.setup_service(services, setup_payloads, policy="my algo")
-my_algo_result = my_cluster_head.execute(services, payloads)
-print(my_algo_result)
+parameter = 1
+
+for i in range(5,int(k)+1):
+    no_of_service = i
+    services = [ i for i in range(no_of_service) ]
+    setup_payloads = [ [1,1,0,parameter] for i in range(no_of_service) ]
+    payloads = [ [1+random(), 0.5+random(), randint(0,5)] for i in range(no_of_service) ]
+
+    my_cluster_head.setup_service(services, setup_payloads, policy="random")
+    random_result = my_cluster_head.execute(services, payloads)
+    print()
+    my_cluster_head.setup_service(services, setup_payloads, policy="my algo")
+    my_algo_result = my_cluster_head.execute(services, payloads)
+    print("no of services =",i,random_result[parameter], my_algo_result[parameter])
 
